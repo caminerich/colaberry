@@ -6,7 +6,7 @@ import sqlite3
 app = Flask(__name__)
 api = Api(app)
 
-#database call of average data 
+#database path 
 db_file = r"/Users/carrieminerich/Desktop/codderry/weather.sqlite"  # Path to SQLite database file
 
 # Function to create a new SQLite connection
@@ -21,13 +21,12 @@ def create_connection(db_file):
 
 # SQL queries for api data
 def query_weather(conn):
-    sql = """SELECT date, SUBSTR(filename,1,11) as station_id, max_temp_c, max_temp_f as min_temp_c, precip
+    sql = """SELECT date, SUBSTR(filename,1,11) as station_id, max_temp_c, min_temp_c, precip
     FROM weather_data
     GROUP BY date, station_id
     order by station_id;"""
     cur = conn.cursor()
     cur.execute(sql)
-    conn.commit()
     weather_data = cur.fetchall()
     return weather_data
 
@@ -36,21 +35,20 @@ def query_stats(conn):
     FROM average
     GROUP BY year, weather_station
     order by weather_station;"""
-    # print(sql)
     cur = conn.cursor()
     cur.execute(sql)
-    conn.commit()
     weather_stats = cur.fetchall()
     return weather_stats
 
 conn = create_connection(db_file)
 weather_data = query_weather(conn)
 weather_stats = query_stats(conn)
+conn.close()
 
 # Example pagination settings
 PAGE_SIZE = 10
 
-# Swagger/OpenAPI configuration
+# Swagger is now OpenAPI; configuration
 @app.route('/swagger')
 def swagger_docs():
     swag = swagger(app)
