@@ -22,6 +22,7 @@ Colaberry Data Engineer Challenge
 - Testing files, labeled "test" with .TXT extension, provided to test code without ingesting large amounts of data. Remember to DROP TABLE before ingesting production data as data will not overwrite. 
 
 ### Future Improvements 
+- Add data quality checks to ensure no duplicate data in 'weather_data' table
 - Implement more robust unit testing
 - Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
 - Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data 
