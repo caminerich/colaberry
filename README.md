@@ -27,7 +27,7 @@ Colaberry Data Engineer Challenge
 - Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
 - Refactor code so only one python script to run modules together
 - Set up linting stage in CI/CD pipeline
-- Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data
+- Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation (move to separate YAML file), not paginating through data
 
 ### Extra Credit
 Assume you are asked to get your code running in the cloud using AWS. What tools and AWS services would you use to deploy the API, database, and a scheduled version of your data ingestion code? Write up a description of your approach.
