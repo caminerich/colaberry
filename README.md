@@ -19,5 +19,9 @@ Colaberry Data Engineer Challenge
 ### Additional Documentation
 - Weather stations data dates are between 1985-01-01 to 2014-12-31
 - Weather station states are the first 7 letters of the filename (ie USC00025) and correspond to Nebraska, Iowa, Illinois, Indiana, or Ohio
+- Testing files, labeled "test" with .TXT extension, provided to test code without ingesting large amounts of data. Remember to DROP TABLE before ingesting production data as data will not overright. 
 
 ### Future Improvements 
+- Implement more robust unit testing
+- Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
+- Flask API is vulnerable code, not providing the searchable web interface and error with swagger documentation 
