@@ -24,4 +24,4 @@ Colaberry Data Engineer Challenge
 ### Future Improvements 
 - Implement more robust unit testing
 - Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
-- Flask API is vulnerable code, not providing the searchable web interface and error with swagger documentation 
+- Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data 
