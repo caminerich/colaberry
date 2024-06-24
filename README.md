@@ -25,7 +25,14 @@ Colaberry Data Engineer Challenge
 - Add data quality checks to ensure no duplicate data in 'weather_data' table
 - Implement more robust unit testing
 - Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
+- Refactor code so only one python script to run modules together
+- Set up linting stage in CI/CD pipeline
 - Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data
 
 ### Extra Credit
 Assume you are asked to get your code running in the cloud using AWS. What tools and AWS services would you use to deploy the API, database, and a scheduled version of your data ingestion code? Write up a description of your approach.
+
+1. Set up docker container to run code in. Use AWS Elastic Beanstalk to manage flask application.
+2. For production, set up a Snowflake or AWS relational database service to house data. Connect flask application to data storage
+3. Schedule data ingestion via Lambda or with a cron job
+4. Set up data quality pipelines, such as greatexpectations.io, to monitor data pipeline and report any variances
