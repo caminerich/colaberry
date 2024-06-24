@@ -109,7 +109,7 @@ def main():
                             start_time = time.time()
                             insert_data(conn, date, max_temp_c, min_temp_c, precip, filename)
                             #print(f"Inserted data from {filename} into SQLite")
-                        end_time = time.time()
+                    end_time = time.time()
 
                 duration = end_time - start_time
                 #print(record_count)
