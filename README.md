@@ -25,4 +25,7 @@ Colaberry Data Engineer Challenge
 - Add data quality checks to ensure no duplicate data in 'weather_data' table
 - Implement more robust unit testing
 - Concurrency or other means to increase speed that raw weather TXT data is ingested in SQLlite database 
-- Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data 
+- Flask API is barely functioning. Not providing the searchable web interface, returning error with swagger documentation, not paginating through data
+
+### Extra Credit
+Assume you are asked to get your code running in the cloud using AWS. What tools and AWS services would you use to deploy the API, database, and a scheduled version of your data ingestion code? Write up a description of your approach.
