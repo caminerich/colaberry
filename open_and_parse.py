@@ -30,18 +30,15 @@ def insert_data(conn, date, max_temp_c, min_temp_c, precip, filename):
     return cur.lastrowid
 
 def query_row_count(conn, filename):
-    sql = f'''SELECT COUNT(*) FROM weather_data WHERE filename = '{filename}'; '''
+    sql = f'''SELECT COUNT(*) FROM weather_data WHERE filename=? '''
     cur = conn.cursor()
-    cur.execute(sql)
-    conn.commit()
-    result = cur.fetchone()
-    record_count = str(result[0])
-    print(f"Row count for {filename} is {record_count} records")
-    return record_count
+    cur.execute(sql, (filename,))
+    count = cur.fetchone()[0]
+    print(f"Row count for {filename} is {count} records")
+    return count
 
 # Function to insert log transactions into SQLite table
 def log_transaction(conn, start_time, end_time, duration, record_count, filename):
-    try:
         sql = '''
             INSERT INTO transaction_log (start_time, end_time, duration, record_count, filename) 
             VALUES (?,?,?,?,?)
@@ -51,14 +48,13 @@ def log_transaction(conn, start_time, end_time, duration, record_count, filename
         conn.commit()
         print(f"Transaction logged successfully: {filename}, {record_count} records in {duration} time")
 
-    except sqlite3.Error as e:
-        print(f"Error logging transaction: {e}")
-
-
 # Main function to parse text files and insert data into SQLite
 # Your code should also produce log output indicating start and end times and number of records ingested.
 def main():
-    database = r"/Users/carrieminerich/Desktop/codderry/weather.sqlite"  # Path to SQLite database file
+    database = r"/Users/carrieminerich/Desktop/codderry/weather.db"  # Path to SQLite database file
+    directory = r'//Users//carrieminerich//Desktop//codderry//code-challenge-template//wx_data'
+    #directory = r'//Users//carrieminerich//Desktop//codderry//test'
+
     sql_create_table = """CREATE TABLE IF NOT EXISTS weather_data(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
@@ -86,16 +82,13 @@ def main():
         create_table(conn, sql_create_table)
         create_table(conn, sql_log)
 
-        # Directory containing text files
-        directory = r'//Users//carrieminerich//Desktop//codderry//code-challenge-template//wx_data'
-        # test file
-        #directory = r'//Users//carrieminerich//Desktop//codderry//test'
 
         # Iterate through all files in the directory
         for filename in os.listdir(directory):
             if filename.endswith(".txt"):
                 filepath = os.path.join(directory, filename)
-                print(filename)
+                print(f"Processing file: {filename}")
+                start_time = time.time()
                 with open(filepath, 'r', encoding='utf-8') as file:
                     for line in file:
                         # Split line by whitespace
@@ -109,19 +102,19 @@ def main():
                             start_time = time.time()
                             insert_data(conn, date, max_temp_c, min_temp_c, precip, filename)
                             #print(f"Inserted data from {filename} into SQLite")
-                    end_time = time.time()
+                end_time = time.time()
 
                 duration = end_time - start_time
                 #print(record_count)
                 record_count = query_row_count(conn, filename)
                 log_transaction(conn, start_time, end_time, duration, record_count, filename)
-
+    else:
+        print("Error! Cannot create the database connection.")
         # Close the database connection
+    if conn:
         conn.close()
     else:
         print("Error! Cannot create the database connection.")
-
-    
 
 
 if __name__ == '__main__':
